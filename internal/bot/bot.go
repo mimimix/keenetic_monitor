@@ -22,7 +22,7 @@ func NewBot(config *config.AppConfig, lc fx.Lifecycle) *telebot.Bot {
 
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
-			b.Start()
+			go b.Start()
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
