@@ -2,15 +2,13 @@ module keeneticmonitor
 
 go 1.22.3
 
-require go.uber.org/fx v1.22.0
-
-require gopkg.in/telebot.v3 v3.3.6
-
-require github.com/ilyakaznacheev/cleanenv v1.5.0
-
-require github.com/mimimix/go-keenetic-api v1.0.8
-
-require github.com/zmwangx/debounce v1.0.0
+require (
+	go.uber.org/fx v1.22.0
+	gopkg.in/telebot.v3 v3.3.6
+	github.com/ilyakaznacheev/cleanenv v1.5.0
+	github.com/mimimix/go-keenetic-api v1.0.8
+	github.com/zmwangx/debounce v1.0.0
+)
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
