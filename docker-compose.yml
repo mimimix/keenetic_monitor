@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  wifimonitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./config.yml:/app/config.yml
+    restart: unless-stopped
