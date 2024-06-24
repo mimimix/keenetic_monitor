@@ -8,7 +8,7 @@ require gopkg.in/telebot.v3 v3.3.6
 
 require github.com/ilyakaznacheev/cleanenv v1.5.0
 
-require github.com/mimimix/go-keenetic-api v1.0.7
+require github.com/mimimix/go-keenetic-api v1.0.8
 
 require github.com/zmwangx/debounce v1.0.0
 
