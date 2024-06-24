@@ -25,7 +25,6 @@ func createDeviceListCommand(router *keenetic.Keenetic) func(c telebot.Context) 
 }
 
 func handlerDeviceList(group *telebot.Group, router *keenetic.Keenetic) {
-	println("moe")
 	getDevicesKB := &telebot.ReplyMarkup{}
 	getDevicesBtn := getDevicesKB.Data("Получить", "listDevices")
 	getDevicesKB.Inline(

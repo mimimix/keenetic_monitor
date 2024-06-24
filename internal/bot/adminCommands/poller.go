@@ -11,7 +11,6 @@ import (
 )
 
 func handlerPoller(bot *telebot.Bot, router *keenetic.Keenetic, config *config.AppConfig) {
-	println("moe poll")
 	if config.PollingIsEnabled && config.PollingChatId != 1 {
 		poller := keenetic.NewPoller(router, int(config.PollingInterval))
 

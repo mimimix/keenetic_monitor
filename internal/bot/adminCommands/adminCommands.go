@@ -6,7 +6,6 @@ import (
 )
 
 func newAdminGroup(bot *telebot.Bot) *telebot.Group {
-	println("CREATED")
 	adminGroup := bot.Group()
 	return adminGroup
 	//adminBot.Use(middleware.Whitelist(a.config.MainAdminId...))
