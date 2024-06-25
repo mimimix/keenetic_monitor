@@ -10,10 +10,8 @@ import (
 	"time"
 )
 
-func handlerPoller(bot *telebot.Bot, router *keenetic.Keenetic, config *config.AppConfig) {
+func handlerPoller(bot *telebot.Bot, poller *keenetic.Poller, config *config.AppConfig) {
 	if config.PollingIsEnabled && config.PollingChatId != 1 {
-		poller := keenetic.NewPoller(router, int(config.PollingInterval))
-
 		var sendQueue []string
 
 		debounceSend, _ := debounce.Debounce(func() {

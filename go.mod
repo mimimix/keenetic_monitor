@@ -3,11 +3,12 @@ module keeneticmonitor
 go 1.22.3
 
 require (
+	github.com/dustin/go-humanize v1.0.1
+	github.com/ilyakaznacheev/cleanenv v1.5.0
+	github.com/mimimix/go-keenetic-api v1.0.11
+	github.com/zmwangx/debounce v1.0.0
 	go.uber.org/fx v1.22.0
 	gopkg.in/telebot.v3 v3.3.6
-	github.com/ilyakaznacheev/cleanenv v1.5.0
-	github.com/mimimix/go-keenetic-api v1.0.9
-	github.com/zmwangx/debounce v1.0.0
 )
 
 require (

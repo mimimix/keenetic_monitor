@@ -3,6 +3,7 @@ package bot
 import (
 	"context"
 	"fmt"
+	"github.com/mimimix/go-keenetic-api"
 	"go.uber.org/fx"
 	"gopkg.in/telebot.v3"
 	"keeneticmonitor/internal/bot/adminCommands"
@@ -41,9 +42,20 @@ func NewBot(config *config.AppConfig, lc fx.Lifecycle) *telebot.Bot {
 	return b
 }
 
+func NewPoller(router *keenetic.Keenetic, config *config.AppConfig) *keenetic.Poller {
+	if config.PollingInterval < 1 {
+		config.PollingInterval = 1
+	}
+	return keenetic.NewPoller(router, config.PollingInterval)
+}
+
 var NewFxBot = fx.Module("bot",
 	fx.Provide(
 		NewBot,
+	),
+	fx.Provide(
+		fx.Private,
+		NewPoller,
 	),
 	adminCommands.NewFxAdminCommands,
 	userCommands.NewFxUserCommands,

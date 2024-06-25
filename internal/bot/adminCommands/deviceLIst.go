@@ -1,15 +1,16 @@
 package adminCommands
 
 import (
-	"encoding/json"
 	"fmt"
+	"github.com/dustin/go-humanize"
 	"github.com/mimimix/go-keenetic-api"
 	"gopkg.in/telebot.v3"
 	"sort"
 	"strings"
+	"time"
 )
 
-func createDeviceListCommand(router *keenetic.Keenetic) func(c telebot.Context) error {
+func createDeviceListCommand(router *keenetic.Keenetic, poller *keenetic.Poller) func(c telebot.Context) error {
 	return func(c telebot.Context) error {
 		devices, err := router.DeviceList()
 		if err != nil {
@@ -20,24 +21,43 @@ func createDeviceListCommand(router *keenetic.Keenetic) func(c telebot.Context) 
 		})
 		var textDevices []string
 		for _, device := range *devices {
-			textDevices = append(textDevices, createDeviceName(device))
+			var eventTime *time.Time
+			if !device.Active {
+				if eventTime == nil {
+					eventTime = nil
+				} else {
+					lastTime, isExists := poller.GetLastOnline(device.Mac)
+					if isExists {
+						eventTime = &lastTime
+					} else {
+						eventTime = nil
+					}
+				}
+			} else {
+				eventSince := time.Now().Add(-time.Duration(device.Uptime) * time.Second)
+				eventTime = &eventSince
+			}
+			uptimeStr := ""
+			if eventTime != nil {
+				uptimeStr = " - " + humanize.Time(*eventTime)
+			}
+			textDevices = append(textDevices, createDeviceName(device)+uptimeStr)
 		}
 		return c.Send("🌐 Список устройств:\n\n" + strings.Join(textDevices, "\n"))
 	}
 }
 
-func handlerDeviceList(group *telebot.Group, router *keenetic.Keenetic) {
+func handlerDeviceList(group *telebot.Group, router *keenetic.Keenetic, poller *keenetic.Poller) {
 	getDevicesKB := &telebot.ReplyMarkup{}
-	marshal, _ := json.Marshal([]any{"1"})
 	getDevicesKB.Inline(
-		getDevicesKB.Row(getDevicesKB.Data("Получить", "listDevices", string(marshal))),
+		getDevicesKB.Row(getDevicesKB.Data("Получить", "listDevices")),
 	)
 	fmt.Println(getDevicesKB)
 	group.Handle("/btn", func(c telebot.Context) error {
 		return c.Send("🌐 Список устройств", getDevicesKB)
 	})
 
-	sendDeviceListCommand := createDeviceListCommand(router)
+	sendDeviceListCommand := createDeviceListCommand(router, poller)
 	group.Handle("/devices", sendDeviceListCommand)
 	//group.Handle(&telebot.Btn{Unique: "listDevices"}, sendDeviceListCommand)
 	group.Handle(&telebot.Btn{Unique: "listDevices"}, func(c telebot.Context) error {
