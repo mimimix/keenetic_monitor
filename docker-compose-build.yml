@@ -2,8 +2,9 @@ version: '3'
 
 services:
   wifimonitor:
-    container_name: wifimonitor
-    image: ghcr.io/mimimix/keenetic_monitor:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./config.yml:/app/config.yml
     restart: unless-stopped
