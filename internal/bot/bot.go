@@ -22,6 +22,7 @@ func NewBot(config *config.AppConfig, lc fx.Lifecycle) *telebot.Bot {
 		OnError: func(err error, c telebot.Context) {
 			fmt.Println("TELEGRAM ERROR: ", err)
 		},
+		//ParseMode: telebot.ModeMarkdownV2,
 	})
 	if err != nil {
 		panic(err)

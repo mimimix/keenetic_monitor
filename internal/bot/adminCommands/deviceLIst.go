@@ -47,7 +47,7 @@ func createDeviceListCommand(router *keenetic.Keenetic, poller *keenetic.Poller)
 	}
 }
 
-func handlerDeviceList(group *telebot.Group, router *keenetic.Keenetic, poller *keenetic.Poller) {
+func handlerDeviceList(group *telebot.Group, bot *telebot.Bot, router *keenetic.Keenetic, poller *keenetic.Poller) {
 	getDevicesKB := &telebot.ReplyMarkup{}
 	getDevicesKB.Inline(
 		getDevicesKB.Row(getDevicesKB.Data("Получить", "listDevices")),
@@ -59,9 +59,5 @@ func handlerDeviceList(group *telebot.Group, router *keenetic.Keenetic, poller *
 
 	sendDeviceListCommand := createDeviceListCommand(router, poller)
 	group.Handle("/devices", sendDeviceListCommand)
-	//group.Handle(&telebot.Btn{Unique: "listDevices"}, sendDeviceListCommand)
-	group.Handle(&telebot.Btn{Unique: "listDevices"}, func(c telebot.Context) error {
-		fmt.Println(c.Data())
-		return nil
-	})
+	group.Handle(&telebot.Btn{Unique: "listDevices"}, sendDeviceListCommand)
 }
