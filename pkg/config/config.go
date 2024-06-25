@@ -7,7 +7,7 @@ import (
 type AppConfig struct {
 	MainAdminId      []int64 `yaml:"MAIN_ADMIN_ID" env:"MAIN_ADMIN_ID" env-required:"true"`
 	TelegramToken    string  `yaml:"TELEGRAM_TOKEN" env:"TELEGRAM_TOKEN" env-required:"true"`
-	PollingIsEnabled bool    `yaml:"POLLING_IS_ENABLED" env:"POLLING_IS_ENABLED" env-required:"true"`
+	PollingIsEnabled bool    `yaml:"POLLING_IS_ENABLED" env:"POLLING_IS_ENABLED"`
 	PollingInterval  int64   `yaml:"POLLING_INTERVAL" env:"POLLING_INTERVAL" env-required:"true"`
 	PollingChatId    int64   `yaml:"POLLING_CHAT_ID" env:"POLLING_CHAT_ID" env-required:"true"`
 	KeeneticBaseUrl  string  `yaml:"KEENETIC_BASE_URL" env:"KEENETIC_BASE_URL" env-required:"true"`

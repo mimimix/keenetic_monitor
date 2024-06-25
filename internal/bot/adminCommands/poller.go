@@ -17,7 +17,7 @@ func handlerPoller(bot *telebot.Bot, router *keenetic.Keenetic, config *config.A
 		var sendQueue []string
 
 		debounceSend, _ := debounce.Debounce(func() {
-			bot.Send(telebot.ChatID(config.PollingChatId), strings.Join(sendQueue, "\n"))
+			_, _ = bot.Send(telebot.ChatID(config.PollingChatId), strings.Join(sendQueue, "\n"))
 			sendQueue = []string{}
 		}, 200*time.Millisecond, debounce.WithMaxWait(time.Second))
 

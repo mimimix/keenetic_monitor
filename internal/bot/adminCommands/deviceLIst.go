@@ -1,6 +1,8 @@
 package adminCommands
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/mimimix/go-keenetic-api"
 	"gopkg.in/telebot.v3"
 	"sort"
@@ -26,15 +28,20 @@ func createDeviceListCommand(router *keenetic.Keenetic) func(c telebot.Context) 
 
 func handlerDeviceList(group *telebot.Group, router *keenetic.Keenetic) {
 	getDevicesKB := &telebot.ReplyMarkup{}
-	getDevicesBtn := getDevicesKB.Data("Получить", "listDevices")
+	marshal, _ := json.Marshal([]any{"1"})
 	getDevicesKB.Inline(
-		getDevicesKB.Row(getDevicesBtn),
+		getDevicesKB.Row(getDevicesKB.Data("Получить", "listDevices", string(marshal))),
 	)
+	fmt.Println(getDevicesKB)
 	group.Handle("/btn", func(c telebot.Context) error {
 		return c.Send("🌐 Список устройств", getDevicesKB)
 	})
 
 	sendDeviceListCommand := createDeviceListCommand(router)
 	group.Handle("/devices", sendDeviceListCommand)
-	group.Handle(&getDevicesBtn, sendDeviceListCommand)
+	//group.Handle(&telebot.Btn{Unique: "listDevices"}, sendDeviceListCommand)
+	group.Handle(&telebot.Btn{Unique: "listDevices"}, func(c telebot.Context) error {
+		fmt.Println(c.Data())
+		return nil
+	})
 }
