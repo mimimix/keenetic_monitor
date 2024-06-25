@@ -23,7 +23,7 @@ jobs:
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/${{ env.PROJECT_NAME }}
           echo START BUILD WITH IMAGE_ID=$IMAGE_ID
 
-          docker buildx build -f .Dockerfile \
+          docker buildx build -f Dockerfile \
           --tag $IMAGE_ID:latest \
           -t ${{ env.PROJECT_NAME }} \
           .
